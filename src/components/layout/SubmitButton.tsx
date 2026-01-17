@@ -25,7 +25,7 @@ export const SubmitButton = ({
 
   const [flash, setFlash] = useState<boolean>(false);
   const [flashTrigger, setFlashTrigger] = useState<boolean>(false);
-  
+
   useEffect(() => {
     const currentPending: boolean = pending;
     if (prevPendingRef.current && !currentPending) {
@@ -60,9 +60,9 @@ export const SubmitButton = ({
       <Button
         {...props}
         className={cn(
+          className,
           "transition-colors duration-300",
           flash && "bg-red-500 hover:bg-red-500 text-white",
-          className,
         )}
       >
         {pending ? <LoaderTwo /> : children}

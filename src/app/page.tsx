@@ -3,21 +3,21 @@ import DitherShader from "@/components/ui/dither-shader";
 
 export default function Home() {
   return (
-    <main className="relative">
+    <main className="relative overflow-hidden">
       <DitherShader
-        src="/background.png"
+        src="/background.jpg"
         gridSize={1}
         ditherMode="bayer"
         colorMode="duotone"
-        primaryColor="#0b090a"
-        secondaryColor="#ff2e2e"
+        primaryColor="#1aa2d9"
+        secondaryColor="#edf5f5"
         threshold={0.75}
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover scale-125"
       />
 
-      <div className="relative z-10 min-h-screen">
+      <section className="relative z-10 min-h-screen">
         <ChapterCard />
-      </div>
+      </section>
     </main>
   );
 }

@@ -27,7 +27,7 @@ export const ChapterForm = ({ error, fetch, maxLength = 4 }: IChapterForm) => {
 
   return (
     <form
-      className="flex flex-col items-center justify-center gap-1"
+      className="flex flex-col items-center justify-center gap-1 mt-2"
       action={chapterAction}
     >
       <InputOTP
@@ -43,18 +43,18 @@ export const ChapterForm = ({ error, fetch, maxLength = 4 }: IChapterForm) => {
         </InputOTPGroup>
       </InputOTP>
 
-      <div className="text-xs text-muted-foreground text-center">
+      <p className="text-xs text-muted-foreground text-center">
         {!chapterNumber ? (
           <>Enter your chapter.</>
         ) : (
           <>Selected chapter: {chapterNumber}.</>
         )}
-      </div>
+      </p>
 
       <SubmitButton
         error={!!error}
-        className="cursor-pointer mt-5 font-semibold"
         disabled={!chapterNumber}
+        className="cursor-pointer mt-5 font-semibold bg-sky-500"
       >
         <span>Submit</span>
         <ArrowRight />
