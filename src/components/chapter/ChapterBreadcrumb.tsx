@@ -48,7 +48,7 @@ export const ChapterBreadcrumb = ({ chapter }: IChapterBreadcrumbProps) => {
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
             <a
-              href={`https://onepiece.fandom.com/wiki/Chapter_${chapter.volume}`}
+              href={`https://onepiece.fandom.com/wiki/Chapter_${chapter.chapter}`}
               target="_blank"
               rel="noopener noreferrer"
             >
