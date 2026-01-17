@@ -17,6 +17,7 @@ interface ISubmitButtonProps
 export const SubmitButton = ({
   error,
   children,
+  disabled,
   className,
   ...props
 }: ISubmitButtonProps) => {
@@ -59,10 +60,12 @@ export const SubmitButton = ({
     >
       <Button
         {...props}
+        disabled={disabled || pending}
         className={cn(
           className,
           "transition-colors duration-300",
           flash && "bg-red-500 hover:bg-red-500 text-white",
+          pending && "cursor-not-allowed"
         )}
       >
         {pending ? <LoaderTwo /> : children}
