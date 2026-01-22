@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/card";
 import useService from "@/hooks/useService";
 import IChapter from "@/interfaces/chapter";
 import { cn } from "@/lib/utils";
+import { BookOpen } from "lucide-react";
 
 export const ChapterCard = () => {
   const { data: chapter, fetch, error } = useService<IChapter | undefined>();
@@ -16,11 +17,26 @@ export const ChapterCard = () => {
       <Card
         className={cn(
           "w-full h-screen md:w-3/4 lg:w-1/3 lg:h-[95vh] p-10 grid content-center justify-items-center gap-4 overflow-y-auto",
-          chapter ? "grid-rows-[auto_1fr_auto]" : "grid-rows-[auto_auto]",
+          chapter && "grid-rows-[auto_1fr_auto]",
         )}
       >
         <Logo />
-        {chapter && <Chapter chapter={chapter} />}
+        {chapter ? (
+          <Chapter chapter={chapter} />
+        ) : (
+          <div className="w-full p-6 rounded-xl border border-dashed text-center">
+            <div className="flex mx-auto border text-muted-foreground rounded-full h-12 w-12 items-center justify-center">
+              <BookOpen className="h-6 w-6" />
+            </div>
+            <div className="mt-2 space-y-1">
+              <h2 className="text-lg font-semibold">No content yet</h2>
+              <p className="text-sm text-muted-foreground">
+                Enter a chapter number to see the cover, title, and related
+                episodes.
+              </p>
+            </div>
+          </div>
+        )}
         <ChapterForm error={error} fetch={fetch} />
       </Card>
     </section>
