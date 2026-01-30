@@ -6,29 +6,32 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import IChapter from "@/interfaces/chapter";
-import { getChapterInfo } from "@/services/chapter.service";
+import useChapterMutation from "@/hooks/useChapterMutation";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 
 interface IChapterForm {
-  error: string | undefined;
-  fetch: (service: () => Promise<IChapter>) => Promise<IChapter | undefined>;
   maxLength?: number;
+  onSubmit: (chapterNumber: number) => void;
 }
 
-export const ChapterForm = ({ error, fetch, maxLength = 4 }: IChapterForm) => {
+export const ChapterForm = ({ maxLength = 4, onSubmit }: IChapterForm) => {
   const [chapterNumber, setChapterNumber] = useState<number>();
-  const chapterAction = async (): Promise<void> => {
-    if (!chapterNumber) return;
-    await fetch(async () => getChapterInfo(chapterNumber));
-  };
+  const { mutate, isError: error } = useChapterMutation();
 
   return (
     <form
       className="flex flex-col items-center justify-center gap-1 mt-2"
-      action={chapterAction}
+      onSubmit={(e) => {
+        e.preventDefault();
+        if (!chapterNumber) return;
+        mutate(chapterNumber, {
+          onSuccess: () => {
+            onSubmit(chapterNumber);
+          },
+        });
+      }}
     >
       <InputOTP
         maxLength={maxLength}
@@ -52,7 +55,7 @@ export const ChapterForm = ({ error, fetch, maxLength = 4 }: IChapterForm) => {
       </p>
 
       <SubmitButton
-        error={!!error}
+        error={error}
         disabled={!chapterNumber}
         className="cursor-pointer mt-5 font-semibold bg-sky-500"
       >

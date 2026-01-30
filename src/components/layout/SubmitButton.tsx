@@ -1,3 +1,5 @@
+"use client";
+
 import { Button, buttonVariants } from "@/components/ui/button";
 import { LoaderTwo } from "@/components/ui/loader";
 import { cn } from "@/lib/utils";

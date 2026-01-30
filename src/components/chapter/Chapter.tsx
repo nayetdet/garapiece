@@ -1,18 +1,24 @@
+"use client";
+
 import ChapterBreadcrumb from "@/components/chapter/ChapterBreadcrumb";
 import ChapterEpisode from "@/components/chapter/ChapterEpisode";
+import ChapterSkeleton from "@/components/chapter/ChapterSkeleton";
 import ImageDialog from "@/components/layout/ImageDialog";
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
-import IChapter from "@/interfaces/chapter";
-import Image from "next/image";
+import useChapter from "@/hooks/useChapter";
 
 interface IChapterProps {
-  chapter: IChapter;
+  chapterNumber?: number;
 }
 
-export const Chapter = ({ chapter }: IChapterProps) => {
+export const Chapter = ({ chapterNumber }: IChapterProps) => {
+  const { data: chapter } = useChapter(chapterNumber);
+  if (!chapter) {
+    return <ChapterSkeleton />;
+  }
+
   return (
     <Card className="w-full h-full py-4 grid grid-rows-[1fr_auto] gap-4 overflow-y-auto">
       <CardHeader className="grid grid-rows-[auto_1fr_auto]">
@@ -39,7 +45,9 @@ export const Chapter = ({ chapter }: IChapterProps) => {
             Equivalent Episodes
           </h2>
           <p className="text-xs text-muted-foreground">
-            Correspondences for this chapter in other sources
+            {chapter.episodes.length > 0
+              ? "Correspondences for this chapter in other sources."
+              : "This chapter has no known correspondences in other sources."}
           </p>
         </header>
         <ul className="grid grid-cols-2 gap-4">

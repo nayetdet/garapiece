@@ -1,17 +1,20 @@
 "use server";
 
 import IChapter from "@/interfaces/chapter";
-import api from "@/services/api";
 import * as cheerio from "cheerio";
 
-export async function getChapterInfo(chapter: number): Promise<IChapter> {
-  const { data: html } = await api.get(`Chapter_${chapter}`);
-  const $ = cheerio.load(html);
+export async function getChapterInfo(chapterNumber: number): Promise<IChapter> {
+  const response = await fetch(`https://onepiece.fandom.com/wiki/Chapter_${chapterNumber}`);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch chapter ${chapterNumber}: ${response.status}`);
+  }
+
+  const $ = cheerio.load(await response.text());
   return {
     imageSource: $("figure[data-source='image']")
       .find("a")
       .attr("href"),
-    chapter: chapter,
+    chapter: chapterNumber,
     volume: Number(
       $("div[data-source='vol']")
       .find("a")

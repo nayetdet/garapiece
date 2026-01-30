@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -28,20 +30,24 @@ export const ChapterBreadcrumb = ({ chapter }: IChapterBreadcrumbProps) => {
             </a>
           </BreadcrumbLink>
         </BreadcrumbItem>
-        <BreadcrumbSeparator>
-          <ChevronRight size={16} />
-        </BreadcrumbSeparator>
-        <BreadcrumbItem>
-          <BreadcrumbLink asChild>
-            <a
-              href={`https://onepiece.fandom.com/wiki/Volume_${chapter.volume}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Vol. {chapter.volume}
-            </a>
-          </BreadcrumbLink>
-        </BreadcrumbItem>
+        {!Number.isNaN(chapter.volume) && (
+          <>
+            <BreadcrumbSeparator>
+              <ChevronRight size={16} />
+            </BreadcrumbSeparator>
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <a
+                  href={`https://onepiece.fandom.com/wiki/Volume_${chapter.volume}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Vol. {chapter.volume}
+                </a>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+          </>
+        )}
         <BreadcrumbSeparator>
           <ChevronRight size={16} />
         </BreadcrumbSeparator>
