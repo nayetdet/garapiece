@@ -1,11 +1,12 @@
-import ChapterCard from "@/components/chapter/ChapterCard";
+import backgroundImg from "@/assets/background.jpg";
+import ChapterCard from "@/components/chapter/chapter-card";
 import DitherShader from "@/components/ui/dither-shader";
 
 export default function Home() {
   return (
     <main className="relative overflow-hidden">
       <DitherShader
-        src="/background.jpg"
+        src={backgroundImg.src}
         gridSize={1}
         ditherMode="bayer"
         colorMode="duotone"

@@ -1,34 +1,35 @@
 "use client";
 
-import SubmitButton from "@/components/layout/SubmitButton";
+import SubmitButton from "@/components/layout/submit-button";
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import useChapterMutation from "@/hooks/useChapterMutation";
+import useChapter from "@/hooks/use-chapter";
+import IChapter from "@/types/chapter";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 
 interface IChapterForm {
   maxLength?: number;
-  onSubmit: (chapterNumber: number) => void;
+  onSubmit: (chapter: IChapter) => void;
 }
 
 export const ChapterForm = ({ maxLength = 4, onSubmit }: IChapterForm) => {
-  const [chapterNumber, setChapterNumber] = useState<number>();
-  const { mutate, isError: error } = useChapterMutation();
+  const [chapter, setChapter] = useState<number | undefined>();
+  const { mutate, isPending, isError } = useChapter();
 
   return (
     <form
       className="flex flex-col items-center justify-center gap-1 mt-2"
       onSubmit={(e) => {
         e.preventDefault();
-        if (!chapterNumber) return;
-        mutate(chapterNumber, {
-          onSuccess: () => {
-            onSubmit(chapterNumber);
+        if (!chapter) return;
+        mutate(chapter, {
+          onSuccess: (data: IChapter) => {
+            onSubmit(data);
           },
         });
       }}
@@ -36,8 +37,8 @@ export const ChapterForm = ({ maxLength = 4, onSubmit }: IChapterForm) => {
       <InputOTP
         maxLength={maxLength}
         pattern={REGEXP_ONLY_DIGITS}
-        value={chapterNumber ? chapterNumber.toString() : ""}
-        onChange={(value) => setChapterNumber(Number(value))}
+        value={chapter ? chapter.toString() : ""}
+        onChange={(value) => setChapter(Number(value))}
       >
         <InputOTPGroup>
           {Array.from({ length: maxLength }).map((_, index) => (
@@ -47,17 +48,18 @@ export const ChapterForm = ({ maxLength = 4, onSubmit }: IChapterForm) => {
       </InputOTP>
 
       <p className="text-xs text-muted-foreground text-center">
-        {!chapterNumber ? (
+        {!chapter ? (
           <>Enter your chapter.</>
         ) : (
-          <>Selected chapter: {chapterNumber}.</>
+          <>Selected chapter: {chapter}.</>
         )}
       </p>
 
       <SubmitButton
-        error={error}
-        disabled={!chapterNumber}
-        className="cursor-pointer mt-5 font-semibold bg-sky-500"
+        pending={isPending}
+        error={isError}
+        disabled={!chapter}
+        className="cursor-pointer mt-5 font-semibold bg-sky-500 hover:bg-sky-800"
       >
         <span>Submit</span>
         <ArrowRight />

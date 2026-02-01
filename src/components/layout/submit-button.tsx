@@ -6,68 +6,73 @@ import { cn } from "@/lib/utils";
 import { VariantProps } from "class-variance-authority";
 import { motion, Variants } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { useFormStatus } from "react-dom";
 
 interface ISubmitButtonProps
   extends
     React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
+  pending?: boolean;
   error?: boolean;
 }
 
 export const SubmitButton = ({
+  pending = false,
   error,
-  children,
   disabled,
+  children,
   className,
   ...props
 }: ISubmitButtonProps) => {
-  const { pending } = useFormStatus();
-  const prevPendingRef = useRef<boolean>(false);
-
-  const [flash, setFlash] = useState<boolean>(false);
+  const prevPending = useRef<boolean>(false);
+  const [status, setStatus] = useState<"idle" | "error" | "success">("idle");
   const [flashTrigger, setFlashTrigger] = useState<boolean>(false);
 
   useEffect(() => {
     const currentPending: boolean = pending;
-    if (prevPendingRef.current && !currentPending) {
+    if (prevPending.current && !currentPending) {
       setFlashTrigger((prev) => !prev);
+      if (!error) {
+        setStatus("success");
+        const timeout = setTimeout(() => setStatus("idle"), 600);
+        return () => clearTimeout(timeout);
+      }
     }
 
-    prevPendingRef.current = currentPending;
-  }, [pending]);
+    prevPending.current = currentPending;
+  }, [pending, error]);
 
   useEffect(() => {
     if (error) {
-      setFlash(true);
-      const timeout = setTimeout(() => setFlash(false), 500);
+      setStatus("error");
+      const timeout = setTimeout(() => setStatus("idle"), 500);
       return () => clearTimeout(timeout);
     }
   }, [error, flashTrigger]);
 
   const variants: Variants = {
-    idle: { x: 0 },
+    idle: { x: 0, scale: 1 },
     error: {
       x: [0, -6, 6, -6, 6, 0],
-      transition: { duration: 0.4 },
+      transition: { duration: 0.5 },
+    },
+    success: {
+      x: [0, -6, 6, -6, 6, 0],
+      transition: { duration: 0.25 },
     },
   };
 
   return (
-    <motion.div
-      variants={variants}
-      animate={flash ? "error" : "idle"}
-      className="inline-block"
-    >
+    <motion.div variants={variants} animate={status} className="inline-block">
       <Button
         {...props}
         disabled={disabled || pending}
         className={cn(
+          "transition-colors duration-200",
+          status === "error" && "bg-red-500 hover:bg-red-500 text-white",
+          status === "success" && "bg-emerald-500 hover:bg-emerald-500 text-white",
+          pending && "cursor-not-allowed",
           className,
-          "transition-colors duration-300",
-          flash && "bg-red-500 hover:bg-red-500 text-white",
-          pending && "cursor-not-allowed"
         )}
       >
         {pending ? <LoaderTwo /> : children}

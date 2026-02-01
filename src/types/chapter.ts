@@ -1,5 +1,5 @@
 export default interface IChapter {
-  imageSource: string | undefined;
+  image: string | undefined;
   chapter: number;
   volume: number;
   title: string;

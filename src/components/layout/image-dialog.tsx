@@ -32,7 +32,12 @@ export const ImageDialog = ({ src, alt }: ImageDialogProps) => {
       >
         <DialogTitle className="sr-only">{alt}</DialogTitle>
         <figure className="relative w-full h-[80vh]">
-          <Image src={src} alt={alt} fill className="object-contain rounded-xl" />
+          <Image
+            src={src}
+            alt={alt}
+            fill
+            className="object-contain rounded-xl"
+          />
         </figure>
       </DialogContent>
     </Dialog>

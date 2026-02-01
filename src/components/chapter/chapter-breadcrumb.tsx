@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -8,7 +6,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import IChapter from "@/interfaces/chapter";
+import IChapter from "@/types/chapter";
 import { BookOpen, ChevronRight } from "lucide-react";
 
 interface IChapterBreadcrumbProps {

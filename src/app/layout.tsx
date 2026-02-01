@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import "./globals.css";
-import Providers from "./providers";
+import Providers from "@/app/providers";
 
 export const metadata: Metadata = {
   title: "Garapiece",
@@ -10,7 +10,9 @@ export default function Layout({ children }: Readonly<{ children: React.ReactNod
   return (
     <html lang="en">
       <body>
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );

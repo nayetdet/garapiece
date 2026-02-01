@@ -1,5 +1,3 @@
-"use client";
-
 import { Badge } from "@/components/ui/badge";
 
 interface IChapterEpisodeProps {
@@ -16,7 +14,7 @@ export const ChapterEpisode = ({ episode }: IChapterEpisodeProps) => {
       >
         <Badge
           variant="secondary"
-          className="w-full justify-center text-sm font-medium"
+          className="w-full justify-center bg-zinc-200/75 hover:bg-zinc-300/75 text-sm font-medium transition-colors duration-200"
         >
           Episode {episode}
         </Badge>

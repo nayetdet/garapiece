@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useCallback, useState } from "react";
 import { cn } from "@/lib/utils";
+import { StaticImageData } from "next/image";
 
 type DitheringMode = "bayer" | "halftone" | "noise" | "crosshatch";
 type ColorMode = "original" | "grayscale" | "duotone" | "custom";

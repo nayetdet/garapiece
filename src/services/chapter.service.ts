@@ -1,20 +1,24 @@
-"use server";
-
-import IChapter from "@/interfaces/chapter";
+import api from "@/services/api";
+import IChapter from "@/types/chapter";
 import * as cheerio from "cheerio";
 
-export async function getChapterInfo(chapterNumber: number): Promise<IChapter> {
-  const response = await fetch(`https://onepiece.fandom.com/wiki/Chapter_${chapterNumber}`);
-  if (!response.ok) {
-    throw new Error(`Failed to fetch chapter ${chapterNumber}: ${response.status}`);
-  }
+export async function getChapter(chapter: number): Promise<IChapter> {
+  const { data } = await api.get("/", {
+    params: {
+      action: "parse",
+      page: `Chapter_${chapter}`,
+      prop: "text",
+      format: "json",
+      origin: "*",
+    },
+  });
 
-  const $ = cheerio.load(await response.text());
+  const $ = cheerio.load(data.parse.text["*"]);
   return {
-    imageSource: $("figure[data-source='image']")
+    image: $("figure[data-source='image']")
       .find("a")
       .attr("href"),
-    chapter: chapterNumber,
+    chapter: chapter,
     volume: Number(
       $("div[data-source='vol']")
       .find("a")

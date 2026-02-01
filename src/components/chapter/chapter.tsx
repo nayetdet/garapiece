@@ -1,22 +1,19 @@
-"use client";
-
-import ChapterBreadcrumb from "@/components/chapter/ChapterBreadcrumb";
-import ChapterEpisode from "@/components/chapter/ChapterEpisode";
-import ChapterSkeleton from "@/components/chapter/ChapterSkeleton";
-import ImageDialog from "@/components/layout/ImageDialog";
+import ChapterBreadcrumb from "@/components/chapter/chapter-breadcrumb";
+import ChapterEpisode from "@/components/chapter/chapter-episode";
+import ChapterSkeleton from "@/components/chapter/chapter-skeleton";
+import ImageDialog from "@/components/layout/image-dialog";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
-import useChapter from "@/hooks/useChapter";
+import IChapter from "@/types/chapter";
 
 interface IChapterProps {
-  chapterNumber?: number;
+  chapter?: IChapter;
 }
 
-export const Chapter = ({ chapterNumber }: IChapterProps) => {
-  const { data: chapter } = useChapter(chapterNumber);
+export const Chapter = ({ chapter }: IChapterProps) => {
   if (!chapter) {
-    return <ChapterSkeleton />;
+    return <ChapterSkeleton />
   }
 
   return (
@@ -24,8 +21,8 @@ export const Chapter = ({ chapterNumber }: IChapterProps) => {
       <CardHeader className="grid grid-rows-[auto_1fr_auto]">
         <ChapterBreadcrumb chapter={chapter} />
         <figure className="relative w-full h-full">
-          {chapter.imageSource ? (
-            <ImageDialog src={chapter.imageSource} alt={chapter.title} />
+          {chapter.image ? (
+            <ImageDialog src={chapter.image} alt={chapter.title} />
           ) : (
             <Skeleton className="w-full h-full" />
           )}
