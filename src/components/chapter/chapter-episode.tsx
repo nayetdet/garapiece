@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import { origin } from "@/services/api";
 
 interface IChapterEpisodeProps {
   episode: number;
@@ -8,7 +9,7 @@ export const ChapterEpisode = ({ episode }: IChapterEpisodeProps) => {
   return (
     <li>
       <a
-        href={`https://onepiece.fandom.com/wiki/Episode_${episode}`}
+        href={new URL(`/wiki/Episode_${episode}`, origin).toString()}
         target="_blank"
         rel="noopener noreferrer"
       >

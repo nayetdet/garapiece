@@ -52,8 +52,15 @@ export const SubmitButton = ({
 
   const variants: Variants = {
     error: {
-      x: [0, -6, 6, -6, 6, 0],
-      transition: { duration: 0.5 },
+      x: [0, -5, 5, -5, 5, 0],
+      transition: { duration: 0.5, ease: "easeInOut" },
+    },
+    success: {
+      scale: [1, 1.05, 0.95, 1],
+      transition: {
+        duration: 0.5,
+        ease: "easeOut",
+      },
     },
   };
 

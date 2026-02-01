@@ -9,31 +9,31 @@ export async function getChapter(chapter: number): Promise<IChapter> {
       page: `Chapter_${chapter}`,
       prop: "text",
       format: "json",
-      origin: "*",
+      origin: "*"
     },
   });
 
   const $ = cheerio.load(data.parse.text["*"]);
   return {
-    image: $("figure[data-source='image']")
+    image: $("[data-source='image']")
       .find("a")
       .attr("href"),
     chapter: chapter,
     volume: Number(
-      $("div[data-source='vol']")
+      $("[data-source='vol']")
       .find("a")
       .attr("title")
       ?.trim()
       .replace("Volume ", "")
     ),
-    title: $("div[data-source='ename']")
+    title: $("[data-source='ename']")
       .find("div")
       .text()
       .trim(),
-    episodes: $("div[data-source='anime']")
+    episodes: $("[data-source='anime']")
       .find("a")
       .map((_index, element) => Number($(element).text().trim().replace("Episode ", "")))
       .get()
-      .filter(Number.isSafeInteger),
+      .filter(Number.isFinite),
   };
 }

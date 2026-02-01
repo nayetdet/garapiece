@@ -59,7 +59,7 @@ export const ChapterForm = ({ maxLength = 4, onSubmit }: IChapterForm) => {
         pending={isPending}
         error={isError}
         disabled={!chapter}
-        className="cursor-pointer mt-5 font-semibold bg-sky-500 hover:bg-sky-800"
+        className="cursor-pointer mt-5 font-semibold bg-sky-500 hover:bg-sky-600"
       >
         <span>Submit</span>
         <ArrowRight />

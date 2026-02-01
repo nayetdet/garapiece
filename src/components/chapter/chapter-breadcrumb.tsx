@@ -6,6 +6,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { origin } from "@/services/api";
 import IChapter from "@/types/chapter";
 import { BookOpen, ChevronRight } from "lucide-react";
 
@@ -20,7 +21,7 @@ export const ChapterBreadcrumb = ({ chapter }: IChapterBreadcrumbProps) => {
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
             <a
-              href="https://onepiece.fandom.com/wiki"
+              href={new URL("/wiki", origin).toString()}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -36,7 +37,7 @@ export const ChapterBreadcrumb = ({ chapter }: IChapterBreadcrumbProps) => {
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
                 <a
-                  href={`https://onepiece.fandom.com/wiki/Volume_${chapter.volume}`}
+                  href={new URL(`/wiki/Volume_${chapter.volume}`, origin).toString()}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -52,7 +53,7 @@ export const ChapterBreadcrumb = ({ chapter }: IChapterBreadcrumbProps) => {
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
             <a
-              href={`https://onepiece.fandom.com/wiki/Chapter_${chapter.chapter}`}
+              href={new URL(`/wiki/Chapter_${chapter.chapter}`, origin).toString()}
               target="_blank"
               rel="noopener noreferrer"
             >
