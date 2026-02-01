@@ -68,11 +68,11 @@ export const SubmitButton = ({
         {...props}
         disabled={disabled || pending}
         className={cn(
+          className,
           "transition-colors duration-200",
           status === "error" && "bg-red-500 hover:bg-red-500 text-white",
           status === "success" && "bg-emerald-500 hover:bg-emerald-500 text-white",
           pending && "cursor-not-allowed",
-          className,
         )}
       >
         {pending ? <LoaderTwo /> : children}

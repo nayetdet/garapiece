@@ -14,7 +14,7 @@ export const Logo = ({ className }: ILogoProps) => {
         alt="Logo"
         fill
         priority
-        className={cn("object-contain", className)}
+        className={cn(className, "object-contain")}
       />
     </figure>
   );
