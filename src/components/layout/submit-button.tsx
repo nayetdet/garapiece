@@ -51,14 +51,9 @@ export const SubmitButton = ({
   }, [error, flashTrigger]);
 
   const variants: Variants = {
-    idle: { x: 0, scale: 1 },
     error: {
       x: [0, -6, 6, -6, 6, 0],
       transition: { duration: 0.5 },
-    },
-    success: {
-      x: [0, -6, 6, -6, 6, 0],
-      transition: { duration: 0.25 },
     },
   };
 
